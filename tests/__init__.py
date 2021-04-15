@@ -43,6 +43,11 @@ class TestKeys(unittest.TestCase):
         if fingerprint_sha256 is not None:
             self.assertEqual(ssh.hash_sha256(), fingerprint_sha256)
 
+    def check_key_to_str(self, pubkey, **kwargs):
+        ssh = SSHKey(pubkey, **kwargs)
+        ssh.parse()
+        self.assertEqual(ssh.to_string(), pubkey)
+
     def check_fail(self, pubkey, expected_error, **kwargs):
         """ Checks that key check raises specified exception """
         # Don't use with statement here - it does not work with Python 2.6 unittest module
@@ -106,11 +111,14 @@ def loop_invalid_options(options):
         setattr(TestOptions, "test_%s" % prefix_tmp, ch(items[1], items[2]))
 
 
-def loop_valid(keyset, prefix):
+def loop_valid(keyset, prefix, test_e2e_str=True):
     """ Loop over list of valid keys and dynamically create tests """
 
     def ch(pubkey, bits, fingerprint_md5, fingerprint_sha256, options, comment, **kwargs):  # pylint:disable=too-many-arguments
         return lambda self: self.check_key(pubkey, bits, fingerprint_md5, fingerprint_sha256, options, comment, **kwargs)
+
+    def e2e_to_str(pubkey, **kwargs):
+        return lambda self: self.check_key_to_str(pubkey, **kwargs)
 
     for items in keyset:
         modes = items.pop()
@@ -129,6 +137,11 @@ def loop_valid(keyset, prefix):
                 TestKeys, "test_%s_mode_%s" % (prefix_tmp, mode),
                 ch(pubkey, bits, fingerprint_md5, fingerprint_sha256, options, comment, **kwargs)
             )
+            if test_e2e_str and 'ssh-ed' not in pubkey and 'ecdsa' not in pubkey:
+                setattr(
+                    TestKeys, "test_%s_e2e" % prefix_tmp,
+                    e2e_to_str(pubkey, **kwargs)
+                )
 
 
 def loop_invalid(keyset, prefix):
@@ -168,7 +181,7 @@ def loop_invalid_authorized_keys(keyset):
 
 
 loop_valid(list_of_valid_keys, "valid_key")
-loop_valid(list_of_valid_keys_rfc4716, "valid_key_rfc4716")
+loop_valid(list_of_valid_keys_rfc4716, "valid_key_rfc4716", test_e2e_str=False)
 loop_invalid(list_of_invalid_keys, "invalid_key")
 loop_options(list_of_valid_options)
 loop_invalid_options(list_of_invalid_options)

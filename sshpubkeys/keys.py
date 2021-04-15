@@ -15,11 +15,13 @@ print(ssh_key.bits)"""
 
 from .exceptions import (
     InvalidKeyError, InvalidKeyLengthError, InvalidOptionNameError, InvalidOptionsError, InvalidTypeError,
-    MalformedDataError, MissingMandatoryOptionValueError, TooLongKeyError, TooShortKeyError, UnknownOptionNameError
+    MalformedDataError, MissingMandatoryOptionValueError, TooLongKeyError, TooShortKeyError, UnknownOptionNameError,
+    UnimplementedKeyTypeError
 )
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric.dsa import DSAParameterNumbers, DSAPublicNumbers
 from cryptography.hazmat.primitives.asymmetric.rsa import RSAPublicNumbers
+from cryptography.hazmat.primitives import serialization
 from urllib.parse import urlparse
 
 import base64
@@ -124,7 +126,7 @@ class SSHKey:  # pylint:disable=too-many-instance-attributes
         self.ecdsa = None
         self.bits = None
         self.comment = None
-        self.options = None
+        self.options = {}
         self.options_raw = None
         self.key_type = None
         self.strict_mode = bool(kwargs.get("strict", True))
@@ -480,3 +482,38 @@ class SSHKey:  # pylint:disable=too-many-instance-attributes
 
         if self.disallow_options and self.options:
             raise InvalidOptionsError("Options are disallowed.")
+
+    def to_string(self):
+        """Converts the SSH key to a string in the authorized_keys format"""
+        opts = []
+        for (option_name, argument) in self.OPTIONS_SPEC:
+            if option_name in self.options:
+                if argument:
+                    option_values = self.options[option_name]
+                    for value in option_values:
+                        full_opt = '{}="{}"'.format(option_name, value)
+                        opts.append(full_opt)
+                else:
+                    opts.append(option_name)
+
+
+        # Start with the options
+        s = ','.join(sorted(opts))
+
+        if self.key_type == b'ssh-rsa':
+            crypto_field = self.rsa
+        elif self.key_type == b'ssh-dsa':
+            crypto_field = self.dsa
+        else:
+            raise UnimplementedKeyTypeError("Key type %s is actually not supported" % self.key_type)
+
+        if len(opts) > 0:
+            s += ' '
+
+        # Add public key
+        s += crypto_field.public_bytes(encoding=serialization.Encoding.OpenSSH, format=serialization.PublicFormat.OpenSSH).decode()
+        # and add comments
+        s += ' '
+        s += self.comment
+
+        return s

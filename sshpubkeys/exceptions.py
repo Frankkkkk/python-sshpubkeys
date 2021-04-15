@@ -78,6 +78,10 @@ class UnknownOptionNameError(UnknownOptionNameException):
     """Unrecognized option name."""
 
 
+class UnimplementedKeyTypeError(Exception):
+    """The key's key type is actually not supported"""
+
+
 class MissingMandatoryOptionValueException(InvalidOptionsError):
     """Mandatory option value is missing."""
 
