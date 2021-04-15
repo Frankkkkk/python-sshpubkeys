@@ -172,14 +172,14 @@ keys = [[
     'from="*.sales.example.net,!pc.sales.example.net"', 'ojarva@ojar-laptop.local', 'valid_rsa_2046_with_options_1',
     ["strict", "loose"]
 ], [
-    'command="dump /home",no-pty,no-port-forwarding ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABADR9kolU4uiD26LMrbakQlNf4QWB2xrdY3nASf6CJdQYzTMjNmbt6sJ4A4pGnCupFrzL04EYDvbVmT4GEZm6CU4BsY61yosnpGSqqcVCdw5xW1k4bCSDPW75WHLCVmYyROhZ+yyo8uAcIy5UIyBZXF/PO7taJrrIi5RwdqIPwtCrJ3dJkcFWa3qZWJykLAFQD5A/lta/egS/u/nyCap2e16WGnvSluz9CyYtGFNS9axzOwHxLFEv2ocOsJjYgzV+Jfpiao94A4VzLKbUDHlfV57KS0tJaT8FKKsg34vN3bsD0zUftLUPpUFgJfMwje0C2rCJkCzwgya2vxLqj2fg0Q0= ojarva@ojar-laptop.local',
+    'command="dump /home",no-port-forwarding,no-pty ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABADR9kolU4uiD26LMrbakQlNf4QWB2xrdY3nASf6CJdQYzTMjNmbt6sJ4A4pGnCupFrzL04EYDvbVmT4GEZm6CU4BsY61yosnpGSqqcVCdw5xW1k4bCSDPW75WHLCVmYyROhZ+yyo8uAcIy5UIyBZXF/PO7taJrrIi5RwdqIPwtCrJ3dJkcFWa3qZWJykLAFQD5A/lta/egS/u/nyCap2e16WGnvSluz9CyYtGFNS9axzOwHxLFEv2ocOsJjYgzV+Jfpiao94A4VzLKbUDHlfV57KS0tJaT8FKKsg34vN3bsD0zUftLUPpUFgJfMwje0C2rCJkCzwgya2vxLqj2fg0Q0= ojarva@ojar-laptop.local',
     2046, 'MD5:27:24:34:50:5b:39:2d:34:f9:60:d5:4e:7a:c7:11:51', 'SHA256:CTHLYlbVhVDoxwvSTkRAvp512KgFbfWP1KKov9/GofY',
-    'command="dump /home",no-pty,no-port-forwarding', 'ojarva@ojar-laptop.local', 'valid_rsa_2046_with_options_2',
+    'command="dump /home",no-port-forwarding,no-pty', 'ojarva@ojar-laptop.local', 'valid_rsa_2046_with_options_2',
     ["strict", "loose"]
 ], [
-    'restrict,pty ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABADR9kolU4uiD26LMrbakQlNf4QWB2xrdY3nASf6CJdQYzTMjNmbt6sJ4A4pGnCupFrzL04EYDvbVmT4GEZm6CU4BsY61yosnpGSqqcVCdw5xW1k4bCSDPW75WHLCVmYyROhZ+yyo8uAcIy5UIyBZXF/PO7taJrrIi5RwdqIPwtCrJ3dJkcFWa3qZWJykLAFQD5A/lta/egS/u/nyCap2e16WGnvSluz9CyYtGFNS9axzOwHxLFEv2ocOsJjYgzV+Jfpiao94A4VzLKbUDHlfV57KS0tJaT8FKKsg34vN3bsD0zUftLUPpUFgJfMwje0C2rCJkCzwgya2vxLqj2fg0Q0= ojarva@ojar-laptop.local',
+    'pty,restrict ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABADR9kolU4uiD26LMrbakQlNf4QWB2xrdY3nASf6CJdQYzTMjNmbt6sJ4A4pGnCupFrzL04EYDvbVmT4GEZm6CU4BsY61yosnpGSqqcVCdw5xW1k4bCSDPW75WHLCVmYyROhZ+yyo8uAcIy5UIyBZXF/PO7taJrrIi5RwdqIPwtCrJ3dJkcFWa3qZWJykLAFQD5A/lta/egS/u/nyCap2e16WGnvSluz9CyYtGFNS9axzOwHxLFEv2ocOsJjYgzV+Jfpiao94A4VzLKbUDHlfV57KS0tJaT8FKKsg34vN3bsD0zUftLUPpUFgJfMwje0C2rCJkCzwgya2vxLqj2fg0Q0= ojarva@ojar-laptop.local',
     2046, 'MD5:27:24:34:50:5b:39:2d:34:f9:60:d5:4e:7a:c7:11:51', 'SHA256:CTHLYlbVhVDoxwvSTkRAvp512KgFbfWP1KKov9/GofY',
-    'restrict,pty', 'ojarva@ojar-laptop.local', 'valid_rsa_2046_with_options_3', ["strict", "loose"]
+    'pty,restrict', 'ojarva@ojar-laptop.local', 'valid_rsa_2046_with_options_3', ["strict", "loose"]
 ], [
     'command="echo ssh-rsa asdf" ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABADR9kolU4uiD26LMrbakQlNf4QWB2xrdY3nASf6CJdQYzTMjNmbt6sJ4A4pGnCupFrzL04EYDvbVmT4GEZm6CU4BsY61yosnpGSqqcVCdw5xW1k4bCSDPW75WHLCVmYyROhZ+yyo8uAcIy5UIyBZXF/PO7taJrrIi5RwdqIPwtCrJ3dJkcFWa3qZWJykLAFQD5A/lta/egS/u/nyCap2e16WGnvSluz9CyYtGFNS9axzOwHxLFEv2ocOsJjYgzV+Jfpiao94A4VzLKbUDHlfV57KS0tJaT8FKKsg34vN3bsD0zUftLUPpUFgJfMwje0C2rCJkCzwgya2vxLqj2fg0Q0= ojarva@ojar-laptop.local ssh-rsa key',
     2046, 'MD5:27:24:34:50:5b:39:2d:34:f9:60:d5:4e:7a:c7:11:51', 'SHA256:CTHLYlbVhVDoxwvSTkRAvp512KgFbfWP1KKov9/GofY',
